@@ -1,5 +1,5 @@
 use crate::{
-    get_line_ending,
+    line_ending::get_line_ending,
     text_edit::{Position, Range, TextEdit},
 };
 
@@ -43,6 +43,11 @@ fn get_diff_start_line_index(old_lines: &[String], new_lines: &[String]) -> Opti
             start_line_index = Some(i);
             break;
         }
+    }
+
+    if start_line_index.is_none() && (old_lines.len() > line_count || new_lines.len() > line_count)
+    {
+        start_line_index = Some(line_count);
     }
 
     start_line_index
